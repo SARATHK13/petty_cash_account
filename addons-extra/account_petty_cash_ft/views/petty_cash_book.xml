@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="Big5" ?>
+<odoo>
+    <record id="petty_cash_book_tree" model="ir.ui.view">
+        <field name="name">petty.cash.book.tree</field>
+        <field name="model">petty.cash.book</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="petty_cash_holder_id"/>
+                <field name="name"/>
+                <field name="payment_ids"/>
+                <field name="journal_ids"/>
+                <field name="expense_ids"/>
+                <field name="date"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="petty_cash_book_form" model="ir.ui.view">
+        <field name="name">petty.cash.book.form</field>
+        <field name="model">petty.cash.book</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <field name="state" widget="statusbar"/>
+                    <button type="object" string="Valid"  name="action_valid" class="oe_highlight" states="draft"/>
+                    <button type="object" string="In Progress"  name="action_progress" class="oe_highlight" states="valid"/>
+                    <button type="object" string="Close" name="close_action" class="oe_highlight" states="closed"/>
+                </header>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="petty_cash_holder_id" options="{'no_create': True}"
+                                   attrs="{'readonly': [('state', '=', 'in_progress')]}"/>
+                        </group>
+                        <group>
+                            <field name="date" attrs="{'readonly': [('state', '=', 'in_progress')]}"/>
+                            <field name="journal_ids" options="{'no_create': True}"
+                                   attrs="{'readonly': [('state', '=', 'in_progress')]}"
+                                   domain="['&amp;',('is_petty_cash','=',True),('type', 'in', ['bank','cash'])]"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page name="payment" string="Payment">
+                            <field name="payment_ids">
+                                <tree editable="bottom">
+                                    <field name="name"/>
+<!--                                    <field name="book_id"/>-->
+                                    <field name="date"/>
+                                    <field name="holder_id"/>
+                                    <field name="payment_date"/>
+                                     <field name="payment_journal_id"/>
+                                    <field name="amount"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page name="expense" string="Expense">
+                            <field name="expense_ids"/>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="petty_cash_account_book_action" model="ir.actions.act_window">
+        <field name="name">Petty Cash Book</field>
+        <field name="res_model">petty.cash.book</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+<!--    <menuitem id="petty_cash_book_root_menu" name="Accounting" sequence="5"/>-->
+<!--    <menuitem id="petty_cash_book_menu" name="PettyCash" parent="account.account_account_menu" sequence="2"/>-->
+<!--    <menuitem id="petty_cash_book_sub_menu" name="Petty Cash Book" parent="petty_cash_main_menu"-->
+<!--              action="petty_cash_account_book_action" sequence="2"/>-->
+
+</odoo>
+

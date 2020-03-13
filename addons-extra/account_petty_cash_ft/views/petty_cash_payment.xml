@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="Big5" ?>
+<odoo>
+    <record id="petty_cash_payment_tree" model="ir.ui.view">
+        <field name="name">petty.cash.payment.tree</field>
+        <field name="model">petty.cash.payment</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="book_id"/>
+                <field name="date"/>
+                <field name="holder_id"/>
+                <field name="payment_date"/>
+                <field name="payment_journal_id"/>
+                <field name="amount"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="petty_cash_payment_form" model="ir.ui.view">
+        <field name="name">petty.cash.payment.form</field>
+        <field name="model">petty.cash.payment</field>
+        <field name="arch" type="xml">
+            <form>
+<!--                <header>-->
+<!--                    <button type="object" string="Confirm"  name="action_confirm" class="oe_highlight"/>-->
+<!--                    <button string="Cancel" class="btn-default" special="cancel"/>-->
+<!--                </header>-->
+
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="book_id"  options="{'no_create': True}"
+                                   domain="[('state', '=', 'in_progress')]"/>
+                            <field name="amount" />
+                        </group>
+                        <group>
+                            <field name="date"/>
+                            <field name="holder_id"  options="{'no_create': True}"/>
+                            <field name="payment_date" />
+                            <field name="payment_journal_id" options="{'no_create': True}"
+                                   domain="['&amp;',('is_petty_cash','=',False),('type', 'in', ['cash','bank'])]"/>
+                        </group>
+                    </group>
+
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="petty_cash_account_payment_action" model="ir.actions.act_window">
+        <field name="name">Petty Cash Payment</field>
+        <field name="res_model">petty.cash.payment</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+<!--    <menuitem id="petty_cash_payment_root_menu" name="Accounting" sequence="5"/>-->
+<!--    <menuitem id="petty_cash_payment_menu" name="PettyCash" parent="account.account_account_menu" sequence="2"/>-->
+<!--    <menuitem id="petty_cash_paymenmt_sub_menu" name="Petty Cash Payment" parent="petty_cash_main_menu"-->
+<!--              action="petty_cash_account_payment_action" sequence="3"/>-->
+
+</odoo>

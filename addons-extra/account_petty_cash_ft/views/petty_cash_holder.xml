@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="Big5" ?>
+<odoo>
+    <record id="petty_cash_holder_tree" model="ir.ui.view">
+        <field name="name">petty.cash.holders.tree</field>
+        <field name="model">petty.cash.holders</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="partner_id"/>
+                <field name="name"/>
+                <field name="account_id"/>
+                <field name="petty_cash_limit"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="petty_cash_holder_form" model="ir.ui.view">
+        <field name="name">petty.cash.holders.form</field>
+        <field name="model">petty.cash.holders</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="partner_id" options="{'no_create': True}"/>
+                            <field name="name"/>
+                        </group>
+                        <group>
+                            <field name="account_id"/>
+                            <field name="petty_cash_limit"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="petty_cash_account_holder_action" model="ir.actions.act_window">
+        <field name="name">Petty Cash Holder</field>
+        <field name="res_model">petty.cash.holders</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+<!--    <menuitem id="petty_cash_holder_root_menu" name="Accounting" sequence="5"/>-->
+<!--    <menuitem id="petty_cash_main_menu" name="PettyCash" parent="account.account_account_menu" sequence="1"/>-->
+<!--    <menuitem id="petty_cash_holder_sub_menu" name="Petty Cash Holder" parent="petty_cash_main_menu"-->
+<!--              action="petty_cash_account_holder_action" sequence="1"/>-->
+
+</odoo>
